@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  php-apache:
+    build: .
+    container_name: php-apache
+    volumes:
+      - ./app:/var/www/html
+    ports:
+      - "8080:80"
+    depends_on:
+      - mssql
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_HOST: "mssql"
+      MSSQL_USER: "sa"
+      MSSQL_PASSWORD: "YourStrong!Passw0rd"
+      MSSQL_DB: "your_database"
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - mssql-data:/var/opt/mssql
+
+volumes:
+  mssql-data:

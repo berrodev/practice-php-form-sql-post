@@ -1,24 +1,43 @@
-<!DOCTYPE html>
-<html lang="es">
+<?php
+$serverName = "mssql";
+$connectionOptions = [
+    "Database" => "your_database",
+    "Uid" => "sa",
+    "PWD" => "YourStrong!Passw0rd",
+    "TrustServerCertificate" => true
+];
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form-sql-post</title>
-</head>
+$conn = sqlsrv_connect($serverName, $connectionOptions);
 
-<body>
-    <main>
-        <form action="insert.php" method="post">
-            <label for="name">Nombre:</label>
-            <input type="text" name="name" id="name" required>
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" required>
-            <label for="phone">Teléfono:</label>
-            <input type="tel" name="phone" id="phone" required>
-            <input type="submit" value="Enviar">
-        </form>
-    </main>
-</body>
+if ($conn === false) {
+    die(print_r(sqlsrv_errors(), true));
+}
 
-</html>
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $name = $_POST["name"];
+    $rut = $_POST["rut"];
+    $gender = $_POST["gender"];
+
+    $sql = "INSERT INTO users (name, rut, gender) VALUES (?, ?, ?)";
+    $params = [$name, $rut, $gender];
+    $stmt = sqlsrv_query($conn, $sql, $params);
+
+    if ($stmt === false) {
+        die(print_r(sqlsrv_errors(), true));
+    } else {
+        echo "Registro insertado con éxito.";
+    }
+}
+
+sqlsrv_close($conn);
+?>
+
+<form method="POST">
+    <input type="text" name="name" placeholder="Nombre" required>
+    <input type="text" name="rut" placeholder="RUT" required>
+    <select name="gender">
+        <option value="M">Masculino</option>
+        <option value="F">Femenino</option>
+    </select>
+    <button type="submit">Enviar</button>
+</form>
