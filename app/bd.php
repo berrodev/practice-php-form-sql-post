@@ -1,7 +1,6 @@
 <?php
 $serverName = "mssql";
 $connectionOptions = [
-    "Database" => "your_database",
     "Uid" => "sa",
     "PWD" => "YourStrong!Passw0rd",
     "TrustServerCertificate" => true
