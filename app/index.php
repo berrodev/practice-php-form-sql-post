@@ -1,4 +1,9 @@
 <?php
+$connectionStatus = include 'bd.php';
+
+if (!$connectionStatus) {
+    die("Error de conexión a la base de datos.");
+}
 
 if($_POST){
     echo "Hola mundo";
