@@ -11,7 +11,7 @@ $conn = sqlsrv_connect($serverName, $connectionOptions);
 if ($conn === false) {
     return false;
 }
-// query para crear base de dato si no existe usuarios
+// Create database if not exists
 $sql = "IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'usuarios')
     CREATE DATABASE usuarios";
 
@@ -39,8 +39,7 @@ if ($_POST) {
     sqlsrv_query($conn, $sql);
 }
 
-// Inser Dummy data for testing 3 records
-
+// Insert Dummy data for testing 3 records
 $sql = "USE usuarios
     INSERT INTO usuarios (name, rut, genero) VALUES ('Juan Perez', '12345678-9', 'M'),
     ('Maria Perez', '12345678-0', 'F'),
