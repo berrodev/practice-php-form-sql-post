@@ -6,7 +6,9 @@ if (!$connectionStatus) {
 }
 
 if($_POST){
-    echo "Hola mundo";
+    echo "Nombre: $name<br>";
+    echo "RUT: $rut<br>";
+    echo "Género: $gender<br>";
 }
 
 ?>
@@ -15,8 +17,9 @@ if($_POST){
     <input type="text" name="name" placeholder="Nombre" required>
     <input type="text" name="rut" placeholder="RUT" required>
     <select name="gender">
-        <option value="M">Masculino</option>
-        <option value="F">Femenino</option>
+        <option value="1">Masculino</option>
+        <option value="2">Femenino</option>
+        <option value="3">Otro</option>
     </select>
     <button type="submit">Enviar</button>
 </form>
